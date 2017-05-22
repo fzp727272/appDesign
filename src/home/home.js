@@ -15,8 +15,13 @@ import {
     ActivityIndicatorIOS,
     Platform,
     Dimensions,
+    TouchableHighlight,
+    Button
 } from 'react-native'
 //const {deviceHeight, deviceWidth} = Dimensions.get('window');
+import {
+  StackNavigator,NavigationActions
+} from 'react-navigation';
 
 import {Icon} from 'react-native-elements'
 import stylevar from '../style/stylevar.js';
@@ -25,7 +30,12 @@ import loaddata from "./homedate.js";
 //const loaddata = [{text:'hahha'}]
 
 export default class Home extends Component {
-     
+    static navigationOptions = {  
+        title: 'Home', 
+        header:{visible:true,}
+       
+    };  
+
     // 构造
       constructor(props) {
         super(props);
@@ -41,6 +51,7 @@ export default class Home extends Component {
         this._onLoadMore = this._onLoadMore.bind(this);
         this. _renderActivityIndicator = this. _renderActivityIndicator.bind(this);
         this.getData = this.getData.bind(this);
+        this._pressRow = this._pressRow.bind(this);
 
       let dataList = [ ]
 
@@ -50,6 +61,7 @@ export default class Home extends Component {
             dataSource: this._dataSource.cloneWithRows(dataList),
         }
     }
+
 
     componentWillUnmount() {
     // 如果存在this.timer，则使用clearTimeout清空。
@@ -70,26 +82,29 @@ export default class Home extends Component {
     //Using ListView
     render() {
         return (
-            <PullToRefreshListView
-                ref={ (component) => this._pullToRefreshListView = component }
-                viewType={PullToRefreshListView.constants.viewType.listView}
-                contentContainerStyle={{backgroundColor: 'transparent', }}
-                style={{marginTop: 0 }}
-                initialListSize={20}
-                enableEmptySections={true}
-                dataSource={this.state.dataSource}
-                pageSize={20}
-                renderRow={this._renderRow}
-                renderHeader={this._renderHeader}
-                renderFooter={this._renderFooter}
-                //renderSeparator={(sectionID, rowID) => <View style={styles.separator} />}
-                onRefresh={this._onRefresh}
-                onLoadMore={this._onLoadMore}
-                pullUpDistance={35}
-                pullUpStayDistance={50}
-                pullDownDistance={35}
-                pullDownStayDistance={50}
-            />
+         
+                <PullToRefreshListView
+                            ref={ (component) => this._pullToRefreshListView = component }
+                            viewType={PullToRefreshListView.constants.viewType.listView}
+                            contentContainerStyle={{backgroundColor: '#fff', }}
+                            style={{marginTop: 0}}
+                            initialListSize={20}
+                            enableEmptySections={true}
+                            dataSource={this.state.dataSource}
+                            pageSize={20}
+                            renderRow={this._renderRow}
+                            renderHeader={this._renderHeader}
+                            renderFooter={this._renderFooter}
+                            //renderSeparator={(sectionID, rowID) => <View style={styles.separator} />}
+                            onRefresh={this._onRefresh}
+                            onLoadMore={this._onLoadMore}
+                            pullUpDistance={35}
+                            pullUpStayDistance={50}
+                            pullDownDistance={35}
+                            pullDownStayDistance={50}
+                        />
+
+          
         )
 
     }
@@ -98,12 +113,16 @@ export default class Home extends Component {
       
     dataList = require("./homedate.js");
     }
-
+    _pressRow(rowData){
+          this.props.navigation.navigate('Detail',{ name:rowData.title, title: '首页',});
+        
+    }
 
     _renderRow = (rowData, sectionID, rowID) => {
          let imgurl = rowData.img;
 
         return (
+        <TouchableHighlight onPress={() => this._pressRow(rowData)}>
             <View style={styles.thumbnail}>
                 <View style={styles.textContainer}>
                     <Image style={styles.listImg} source={imgurl}> 
@@ -120,9 +139,9 @@ export default class Home extends Component {
                             <Text style={styles.ListText}># {rowData.text}</Text>
                        </View>
                     </Image>
-                   
                 </View>
             </View>
+        </TouchableHighlight>
         )
     }
 
@@ -326,7 +345,7 @@ const styles = StyleSheet.create({
         paddingRight: 5,
     },
     loadtext: {
-        color: stylevar.color.darkGreyColor,
+        color: stylevar.color.iconActiveColor,
         fontWeight: 'bold',
         fontSize: stylevar.fontSize.commonSize,
     },
@@ -364,8 +383,8 @@ const styles = StyleSheet.create({
          color: stylevar.color.mainColor,
         shadowColor: stylevar.color.blackColor,
         shadowOffset: {
-            h: 0,
-            w: 0
+            height: 0,
+            width: 0
         },
         shadowRadius: 8,
         shadowOpacity: 0.3,
@@ -376,8 +395,8 @@ const styles = StyleSheet.create({
         color: stylevar.color.mainColor,
         shadowColor: stylevar.color.blackColor,
         shadowOffset: {
-            h: 0,
-            w: 0
+            height: 0,
+            width: 0
         },
         shadowRadius: 8,
         shadowOpacity: 0.3,

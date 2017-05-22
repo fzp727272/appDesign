@@ -12,6 +12,10 @@ import {
   Tab,
   Icon
 } from 'react-native-elements'
+//const {deviceHeight, deviceWidth} = Dimensions.get('window');
+import {
+  StackNavigator,NavigationActions
+} from 'react-navigation';
 
 import {
   AppRegistry,
@@ -24,6 +28,8 @@ import Home from './src/home/home.js';
 import Search from './src/search.js';
 import Like from './src/like.js';
 import User from './src/user.js';
+
+import ListDetail from './src/listdetail.js'
 
 const styles = StyleSheet.create({
   tabContainer:{
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
 
 });
 
-export default class myapp extends Component {
+export default class Main extends Component {
 
   constructor() {
     super();
@@ -80,7 +86,7 @@ addElement(){
       selectedTab
     } = this.state
     return (
-      <Tabs >
+      <Tabs sceneStyle={{backgroundColor:'#fff'}}>
           <Tab tabStyle={styles.tabContainer}
             titleStyle={styles.tabTitle}
             selectedTitleStyle={styles.tabSelectedTitle}
@@ -91,7 +97,7 @@ addElement(){
             renderSelectedIcon={() => <Icon containerStyle={styles.iconActiveContainer} color={stylevar.color.iconActiveColor} name='home' 
              size={36} />}
             onPress={() => this.changeTab('Home')}>
-            <Home />
+            <Home navigation={this.props.navigation} />
           </Tab>
            <Tab tabStyle={styles.tabContainer}
             titleStyle={styles.tabTitle}
@@ -144,6 +150,14 @@ addElement(){
   }
 }
 
+const Nav = StackNavigator({
+  Main: {screen: Main},
+  Detail: {screen: ListDetail},
+},{
+    headerMode: 'none',
+
+},);
 
 
-AppRegistry.registerComponent('myapp', () => myapp);
+
+AppRegistry.registerComponent('myapp', () => Nav);

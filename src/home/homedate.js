@@ -9,11 +9,6 @@ export default listdata = [{
   "text": "asgdahsgfasdasd",
   "img": require("../img/image2.png"),
 }, {
-  "title": "New",
-  "version": "0.0.1",
-  "text": "asgdahsgfasdasd",
-  "img": require("../img/image3.png"),
-}, {
   "title": "NoteApp",
   "version": "0.0.1",
   "text": "asgdahsgfasdasd",
@@ -22,12 +17,7 @@ export default listdata = [{
   "title": "NoteApp",
   "version": "0.0.1",
   "text": "asgdahsgfasdasd",
-  "img": require("../img/imag1.png"),
-}, {
-  "title": "NoteApp",
-  "version": "0.0.1",
-  "text": "asgdahsgfasdasd",
-  "img": require("../img/imag1.png"),
+  "img": require("../img/image.png"),
 }, {
   "title": "NoteApp",
   "version": "0.0.1",
