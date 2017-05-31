@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default class Search extends Component {
+export default class Image extends Component {
 
 	constructor() {
 		super();
@@ -36,7 +36,7 @@ export default class Search extends Component {
 	render() {
 		return (
 		<View style={styles.container}>
-     	  <Text>Search</Text>
+     	  <Text>Image</Text>
         </View>
 		);
 	}

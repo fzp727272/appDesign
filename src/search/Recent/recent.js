@@ -24,14 +24,14 @@ import {
 } from 'react-navigation';
 
 import {Icon} from 'react-native-elements'
-import stylevar from '../style/stylevar.js';
+import stylevar from '../../style/stylevar.js';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
-import loaddata from "./homedate.js";
+import loaddata from "./Recentdate.js";
 //const loaddata = [{text:'hahha'}]
 
-export default class Home extends Component {
+export default class Recent extends Component {
     static navigationOptions = {  
-        title: 'Home', 
+        title: 'Recent', 
         header:{visible:true,}
        
     };  
@@ -83,11 +83,11 @@ export default class Home extends Component {
     //Using ListView
     render() {
         return (
-         
+           <View style={{ flex:1}}>
                 <PullToRefreshListView
                             ref={ (component) => this._pullToRefreshListView = component }
                             viewType={PullToRefreshListView.constants.viewType.listView}
-                            contentContainerStyle={{backgroundColor: '#fff', }}
+                            contentContainerStyle={{backgroundColor: '#fff',}}
                             style={{marginTop: -1}}
                             initialListSize={20}
                             enableEmptySections={true}
@@ -104,7 +104,7 @@ export default class Home extends Component {
                             pullDownDistance={35}
                             pullDownStayDistance={50}
                         />
-
+        </View>
           
         )
 
@@ -112,60 +112,13 @@ export default class Home extends Component {
 
     getData(){
       
-    dataList = require("./homedate.js");
+    dataList = require("./Recentdate.js");
     }
     _pressRow(rowData,showColor){
-          this.props.navigation.navigate('Detail',{ name:rowData.title,titleImg:rowData.img,user:rowData.user,showColor:showColor,});
+          this.props.navigation.navigate('Detail',{ name:rowData.title,imgHeight:rowData.imgHeight, imgWidth:rowData.imgWidth, titleImg:rowData.img,user:rowData.user,showColor:showColor,});
         
     }
 
-    _renderRow = (rowData, sectionID, rowID) => {
-         let imgurl = rowData.img;
-
-        let colorNum = rowData.key % 6;
-        let showColor= '';
-        switch (colorNum ) {
-            case 0:
-               showColor = "#FF2D55";
-                break;
-            case 1:
-                showColor = "#FF9500";
-                break;
-            case 2:
-               showColor = "#4CD964";
-                break;
-            case 3:
-                showColor = "#5AC8FA";
-                break;
-            case 4:
-                showColor = "#007AFF";
-                break;
-             case 5:
-                showColor = "#5856D6";
-                break;
-    }
-        return (
-        <TouchableHighlight onPress={() => this._pressRow(rowData,showColor)}>
-            <View style={[styles.thumbnail,{backgroundColor:showColor}]}>
-                <View style={styles.textContainer}>
-                    <Image style={styles.listImg} source={imgurl}> 
-                       <View style={styles.backgroundImg}>
-                            <View style={styles.ListTitle}>  
-                              <Icon containerStyle={{marginRight:5,}}
-                                  color={stylevar.color.mainColor}
-                                  name='rowing'/> 
-                             <Text style={styles.ListTitleText}>
-                               {rowData.title} 
-                             </Text>
-                            </View>
-                            <Text style={styles.ListText}># {rowData.text}</Text>
-                       </View>
-                    </Image>
-                </View>
-            </View>
-        </TouchableHighlight>
-        )
-    }
 
     _renderHeader = (viewState) => {
         let {pullState, pullDistancePercent} = viewState
@@ -259,6 +212,8 @@ export default class Home extends Component {
                     //text: `item-${i}`
                     text:loaddata[i].text,
                     img:loaddata[i].img,
+                    imgHeight:loaddata[i].imgHeight,
+                    imgWidth:loaddata[i].imgWidth,
                     title:loaddata[i].title,
                     user:loaddata[i].user,
                     key:i,
@@ -292,6 +247,8 @@ export default class Home extends Component {
                 addedDataList.push({
                     text:loaddata[i].text ,
                     img:loaddata[i].img,
+                    imgHeight:loaddata[i].imgHeight,
+                    imgWidth:loaddata[i].imgWidth,
                     title:loaddata[i].title,
                     user:loaddata[i].user,
                     key:i,
@@ -341,8 +298,71 @@ export default class Home extends Component {
         )
     }
 
-}
+        _renderRow = (rowData, sectionID, rowID) => {
+         let imgurl = rowData.img;
 
+        let colorNum = rowData.key % 6;
+        let showColor= '';
+        switch (colorNum ) {
+            case 0:
+               showColor = "#FF2D55";
+                break;
+            case 1:
+                showColor = "#FF9500";
+                break;
+            case 2:
+               showColor = "#4CD964";
+                break;
+            case 3:
+                showColor = "#5AC8FA";
+                break;
+            case 4:
+                showColor = "#007AFF";
+                break;
+             case 5:
+                showColor = "#5856D6";
+                break;
+    }
+        return (
+        <TouchableHighlight onPress={() => this._pressRow(rowData,showColor)} style={styles.listItem}>
+           <View style={{width:Dimensions.get('window').width,}} >
+                <View style={styles.listHeader}>
+                    <Image  style={styles.userImg} source={require('../../img/image3.png')} />
+                    <View style={{paddingLeft:stylevar.padding.middlePadding}}>
+                        <Text style={styles.ListTitleText}>
+                                   {rowData.title} 
+                         </Text>
+                        <Text style={styles.ListText}># {rowData.text}</Text>
+                    </View>
+                    <View style={styles.ListNote}>
+                       <Text style={styles.ListNoteText}>363</Text>
+                       <Icon name='favorite' color={stylevar.color.darkGreyColor} size={18} />
+
+                    </View>
+                </View>
+                <View style={[styles.thumbnail,{backgroundColor:showColor}]}>
+                   
+                        <Image resizeMode={'cover'} style={[styles.listImg,{height:rowData.imgHeight / rowData.imgWidth * Dimensions.get('window').width,}]} source={imgurl}> 
+                        
+                         
+                        </Image>
+                  
+                </View>
+
+                <View style={styles.subscribe}>
+                    <Text style={styles.subscribeText}>
+                        The observatory is a popular tourist attraction with an excellent view of the Hollywood sign, and an extensive array of space and science-related displays. 
+                        Since the observatory opened in 1935, admission has been free..The observatory is a popular tourist attraction with an excellent view of the Hollywood sign, and an extensive array of space and science-related displays. 
+                        Since the observatory opened in 1935, admiss
+                    </Text>
+                </View>
+            </View>
+        </TouchableHighlight>
+        )
+    }
+
+
+}
 const styles = StyleSheet.create({
     itemHeader: {
         height: 35,
@@ -353,8 +373,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    item: {
-        height: stylevar.home.listHeight,
+    listItem: {
+
+        marginTop: stylevar.padding.largePadding,
+        paddingBottom: stylevar.padding.largePadding,
+        borderBottomWidth: 1,
+        borderColor: stylevar.color.lightGreyColor,
+        // height: stylevar.home.listHeight,
         //borderBottomWidth: StyleSheet.hairlineWidth,
         //borderBottomColor: '#ccc',
         overflow: 'hidden',
@@ -380,45 +405,48 @@ const styles = StyleSheet.create({
     },
 
     thumbnail: {
-        height: stylevar.home.listHeight,
+
+        //  height: stylevar.home.listHeight,
         padding: 0,
         flexDirection: 'row',
         // borderBottomWidth: StyleSheet.hairlineWidth,
         //borderBottomColor: '#ccc',
         overflow: 'hidden',
     },
+    listHeader: {
+        paddingLeft: stylevar.padding.layoutPadding,
+        paddingBottom: stylevar.padding.middlePadding,
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+    },
+    userImg: {
+        paddingLeft: 20,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+
+    },
     listImg: {
         width: Dimensions.get('window').width,
-        height: stylevar.home.listHeight,
+        //height:'100%' ,
         //  height:stylevar.home.listHeight,
-        alignItems: 'stretch',
+        // alignItems: 'stretch',
         //justifyContent: 'center',
     },
-    backgroundImg: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.3)',
-        width: '100%',
-        height: '100%',
-    },
+
     ListTitle: {
         flexDirection: 'row',
     },
-     ListTitleText:{
-         fontSize:stylevar.fontSize.titleSize,
-         color: stylevar.color.mainColor,
+    ListTitleText: {
+        fontSize: stylevar.fontSize.noteSize,
+        color: stylevar.color.blackColor,
         shadowColor: stylevar.color.blackColor,
-        shadowOffset: {
-            height: 0,
-            width: 0
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.3,
-     },
+        marginTop: 2,
+    },
     ListText: {
-        marginTop:5,
-        fontSize:stylevar.fontSize.commonSize,
-        color: stylevar.color.mainColor,
+        marginTop: 2,
+        fontSize: stylevar.fontSize.commonSize,
+        color: stylevar.color.blackColor,
         shadowColor: stylevar.color.blackColor,
         shadowOffset: {
             height: 0,
@@ -427,11 +455,32 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         shadowOpacity: 0.3,
     },
-
-    textContainer: {
-        padding: 20,
+    ListNote: {
+        position: 'absolute',
+        right: stylevar.padding.layoutPadding,
+        top: 12,
+        flexDirection: 'row',
+    },
+    ListNoteText: {
+        fontSize: stylevar.fontSize.commonSize,
+        fontWeight: 'bold',
+        color: stylevar.color.darkGreyColor,
+        paddingRight: stylevar.padding.smallPadding,
+    },
+    ListNoteIcon: {},
+    imgContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },   
+     subscribe: {
+                paddingLeft: stylevar.padding.layoutPadding,
+                paddingRight: stylevar.padding.layoutPadding,
+                 marginTop: stylevar.padding.layoutPadding,
+    },
+        subscribeText: {
+            lineHeight: 16,
+            fontSize: stylevar.fontSize.commonSize,
+            color: stylevar.color.darkGreyColor,
+        },
 })

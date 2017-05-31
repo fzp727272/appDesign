@@ -23,9 +23,12 @@ import {
   Text,
   View,
 } from 'react-native';
+
+import ImagePicker from 'react-native-image-picker';
+
 import stylevar from './src/style/stylevar.js';
 import Home from './src/home/home.js';
-import Search from './src/search.js';
+import Search from './src/search/search.js';
 import Like from './src/like.js';
 import User from './src/user.js';
 
@@ -34,6 +37,7 @@ import ListDetail from './src/listdetail.js'
 const styles = StyleSheet.create({
   tabContainer:{
     paddingTop:3,
+    backgroundColor:'#fff'
   },
   tabTitle: {
   marginTop:0,
@@ -68,6 +72,7 @@ export default class Main extends Component {
     super();
     this.state = {
       selectedTab: 'Home',
+      avatarSource: {},
     };
     this.changeTab = this.changeTab.bind(this);
     this.addElement = this.addElement.bind(this);
@@ -79,7 +84,41 @@ export default class Main extends Component {
     })
   }
 addElement(){
-  alert(11)
+  var options = {
+  title: 'Select Avatar',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+};
+ 
+/**
+ * The first arg is the options object for customization (it can also be null or omitted for default options),
+ * The second arg is the callback which sends object: response (more info below in README)
+ */
+ImagePicker.showImagePicker(options, (response) => {
+  console.log('Response = ', response);
+ 
+  if (response.didCancel) {
+    console.log('User cancelled image picker');
+  }
+  else if (response.error) {
+    console.log('ImagePicker Error: ', response.error);
+  }
+  else if (response.customButton) {
+    console.log('User tapped custom button: ', response.customButton);
+  }
+  else {
+    let source = { uri: response.uri };
+ 
+    // You can also display the image using data: 
+    // let source = { uri: 'data:image/jpeg;base64,' + response.data }; 
+ 
+    this.setState({
+      avatarSource: source
+    });
+  }
+});
 }
   render() {
     const {
@@ -109,10 +148,10 @@ addElement(){
             renderSelectedIcon={() => <Icon containerStyle={styles.iconActiveContainer} color={stylevar.color.iconActiveColor} name='visibility' j
              size={36} />}
             onPress={() => this.changeTab('Search')}>
-            <Search />
+            <Search  navigation={this.props.navigation}/>
           </Tab>
          <Tab tabStyle={{paddingTop:10,}} style={{paddingBottom:-10}}
-            renderIcon={() => <Icon containerStyle={{paddingTop:10}} color={stylevar.color.redColor}  name='camera-alt' 
+            renderIcon={() => <Icon containerStyle={{paddingTop:10}} color={stylevar.color.iconActiveColor}  name='camera-alt' 
             size={46} />}
             
             onPress={() => this.addElement()}>
@@ -129,7 +168,7 @@ addElement(){
             renderSelectedIcon={() => <Icon containerStyle={styles.iconActiveContainer} color={stylevar.color.iconActiveColor} name='favorite' j
              size={32} />}
             onPress={() => this.changeTab('Like')}>
-            <Like />
+            <Like navigation={this.props.navigation} />
           </Tab>
 
             <Tab tabStyle={styles.tabContainer}
@@ -142,7 +181,7 @@ addElement(){
             renderSelectedIcon={() => <Icon containerStyle={styles.iconActiveContainer} color={stylevar.color.iconActiveColor} name='person' 
              size={36} />}
             onPress={() => this.changeTab('User')}>
-            <User />
+            <User navigation={this.props.navigation} />
           </Tab>
 
        </Tabs>
