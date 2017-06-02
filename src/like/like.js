@@ -10,18 +10,18 @@ import React, {
 
 import {
 	StyleSheet,
+	ScrollView,
 	Text,
 	View,
 	WebView,
 } from 'react-native';
-import stylevar from './style/stylevar.js';
+import stylevar from '../style/stylevar.js';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		paddingTop:20,
-
 	}
 })
 
@@ -35,9 +35,9 @@ export default class Like extends Component {
 
 	render() {
 		return (
-		<View style={styles.container}>
-     	  <Text>Like</Text>
-        </View>
+		<ScrollView>
+            
+		</ScrollView>
 		);
 	}
 }

@@ -9,9 +9,9 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>need your permition</string>
 	<key>CFBundleGetInfoString</key>
-	<string></string>
+	<string/>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -46,7 +46,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>UIAppFonts</key>

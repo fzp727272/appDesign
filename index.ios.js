@@ -29,8 +29,8 @@ import ImagePicker from 'react-native-image-picker';
 import stylevar from './src/style/stylevar.js';
 import Home from './src/home/home.js';
 import Search from './src/search/search.js';
-import Like from './src/like.js';
-import User from './src/user.js';
+import Like from './src/like/like.js';
+import Me from './src/me/me.js';
 
 import ListDetail from './src/listdetail.js'
 
@@ -181,7 +181,7 @@ ImagePicker.showImagePicker(options, (response) => {
             renderSelectedIcon={() => <Icon containerStyle={styles.iconActiveContainer} color={stylevar.color.iconActiveColor} name='person' 
              size={36} />}
             onPress={() => this.changeTab('User')}>
-            <User navigation={this.props.navigation} />
+            <Me navigation={this.props.navigation} />
           </Tab>
 
        </Tabs>

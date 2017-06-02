@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_0" orientation="portrait">
+    <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,18 +15,26 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="uaY-20-adT">
-                    <rect key="frame" x="33" y="114.5" width="414" height="251"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="414" id="Viq-Ql-9sD"/>
-                        <constraint firstAttribute="height" constant="251" id="okM-T8-4bK"/>
-                    </constraints>
-                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6Hi-M5-0B9">
+                    <rect key="frame" x="33" y="115" width="414" height="250"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nBe-TE-Bay">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" highlightedImage="launch" translatesAutoresizingMaskIntoConstraints="NO" id="uaY-20-adT">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
+                                </imageView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="uaY-20-adT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="A3q-tw-SvQ"/>
-                <constraint firstItem="uaY-20-adT" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cSl-o5-Js9"/>
+                <constraint firstItem="6Hi-M5-0B9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="115" id="2Ww-VW-AIM"/>
+                <constraint firstItem="6Hi-M5-0B9" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="U0f-YG-BPv"/>
+                <constraint firstItem="6Hi-M5-0B9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="33" id="aO2-g5-TtE"/>
+                <constraint firstItem="6Hi-M5-0B9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uyh-i2-6qE"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -34,6 +42,6 @@
         </view>
     </objects>
     <resources>
-        <image name="launch" width="414" height="251"/>
+        <image name="launch" width="371" height="398"/>
     </resources>
 </document>

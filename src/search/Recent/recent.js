@@ -16,16 +16,18 @@ import {
     Platform,
     Dimensions,
     TouchableHighlight,
-    Button
+    TouchableOpacity,
+  
 } from 'react-native'
 //const {deviceHeight, deviceWidth} = Dimensions.get('window');
 import {
   StackNavigator,NavigationActions
 } from 'react-navigation';
 
-import {Icon} from 'react-native-elements'
+import {Icon,  Button} from 'react-native-elements'
 import stylevar from '../../style/stylevar.js';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
+import UserHeader from '../../component/userheader.js'
 import loaddata from "./Recentdate.js";
 //const loaddata = [{text:'hahha'}]
 
@@ -298,10 +300,13 @@ export default class Recent extends Component {
         )
     }
 
+
+
         _renderRow = (rowData, sectionID, rowID) => {
          let imgurl = rowData.img;
+         
 
-        let colorNum = rowData.key % 6;
+        let colorNum = rowData.key % 6; 
         let showColor= '';
         switch (colorNum ) {
             case 0:
@@ -323,47 +328,38 @@ export default class Recent extends Component {
                 showColor = "#5856D6";
                 break;
     }
+
+
+
         return (
-        <TouchableHighlight onPress={() => this._pressRow(rowData,showColor)} style={styles.listItem}>
-           <View style={{width:Dimensions.get('window').width,}} >
-                <View style={styles.listHeader}>
-                    <Image  style={styles.userImg} source={require('../../img/image3.png')} />
-                    <View style={{paddingLeft:stylevar.padding.middlePadding}}>
-                        <Text style={styles.ListTitleText}>
-                                   {rowData.title} 
-                         </Text>
-                        <Text style={styles.ListText}># {rowData.text}</Text>
-                    </View>
-                    <View style={styles.ListNote}>
-                       <Text style={styles.ListNoteText}>363</Text>
-                       <Icon name='favorite' color={stylevar.color.darkGreyColor} size={18} />
-
-                    </View>
+       
+           <View style={styles.listItem} >
+                <UserHeader rowData={rowData} />
+                 <TouchableHighlight onPress={() => this._pressRow(rowData,showColor)}>
+                 <View>
+                        <View style={[styles.thumbnail,{backgroundColor:showColor}]}>
+                             <Image resizeMode={'cover'} style={[styles.listImg,{height:rowData.imgHeight / rowData.imgWidth * Dimensions.get('window').width,}]} source={imgurl}>                                 
+                             </Image>           
+                        </View>
+                        <View style={styles.subscribe}>
+                        <Text style={styles.ListTitle}>
+                               {rowData.title} 
+                             </Text>
+                            <Text style={styles.subscribeText}>
+                                The observatory is a popular tourist attraction with an excellent view of the Hollywood sign, and an extensive array of space and science-related displays. 
+                                Since the observatory opened in 1935, admission has been free..The observatory is a popular tourist attraction with an excellent view of the Hollywood sign, and an extensive array of space and science-related displays. 
+                                Since the observatory opened in 1935, admiss
+                            </Text>
+                        </View>
                 </View>
-                <View style={[styles.thumbnail,{backgroundColor:showColor}]}>
-                   
-                        <Image resizeMode={'cover'} style={[styles.listImg,{height:rowData.imgHeight / rowData.imgWidth * Dimensions.get('window').width,}]} source={imgurl}> 
-                        
-                         
-                        </Image>
-                  
-                </View>
-
-                <View style={styles.subscribe}>
-                    <Text style={styles.subscribeText}>
-                        The observatory is a popular tourist attraction with an excellent view of the Hollywood sign, and an extensive array of space and science-related displays. 
-                        Since the observatory opened in 1935, admission has been free..The observatory is a popular tourist attraction with an excellent view of the Hollywood sign, and an extensive array of space and science-related displays. 
-                        Since the observatory opened in 1935, admiss
-                    </Text>
-                </View>
+              </TouchableHighlight>
             </View>
-        </TouchableHighlight>
+    
         )
     }
 
 
-}
-const styles = StyleSheet.create({
+}const styles = StyleSheet.create({
     itemHeader: {
         height: 35,
         borderBottomWidth: StyleSheet.hairlineWidth,
@@ -413,19 +409,7 @@ const styles = StyleSheet.create({
         //borderBottomColor: '#ccc',
         overflow: 'hidden',
     },
-    listHeader: {
-        paddingLeft: stylevar.padding.layoutPadding,
-        paddingBottom: stylevar.padding.middlePadding,
-        flexDirection: 'row',
-        justifyContent: 'flex-start'
-    },
-    userImg: {
-        paddingLeft: 20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-
-    },
+   
     listImg: {
         width: Dimensions.get('window').width,
         //height:'100%' ,
@@ -434,53 +418,27 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
     },
 
-    ListTitle: {
-        flexDirection: 'row',
-    },
-    ListTitleText: {
-        fontSize: stylevar.fontSize.noteSize,
-        color: stylevar.color.blackColor,
-        shadowColor: stylevar.color.blackColor,
-        marginTop: 2,
-    },
-    ListText: {
-        marginTop: 2,
-        fontSize: stylevar.fontSize.commonSize,
-        color: stylevar.color.blackColor,
-        shadowColor: stylevar.color.blackColor,
-        shadowOffset: {
-            height: 0,
-            width: 0
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.3,
-    },
-    ListNote: {
-        position: 'absolute',
-        right: stylevar.padding.layoutPadding,
-        top: 12,
-        flexDirection: 'row',
-    },
-    ListNoteText: {
-        fontSize: stylevar.fontSize.commonSize,
-        fontWeight: 'bold',
-        color: stylevar.color.darkGreyColor,
-        paddingRight: stylevar.padding.smallPadding,
-    },
-    ListNoteIcon: {},
+
+  
+   
     imgContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },   
-     subscribe: {
-                paddingLeft: stylevar.padding.layoutPadding,
-                paddingRight: stylevar.padding.layoutPadding,
-                 marginTop: stylevar.padding.layoutPadding,
     },
-        subscribeText: {
-            lineHeight: 16,
-            fontSize: stylevar.fontSize.commonSize,
-            color: stylevar.color.darkGreyColor,
-        },
+    subscribe: {
+        paddingLeft: stylevar.padding.layoutPadding,
+        paddingRight: stylevar.padding.layoutPadding,
+        marginTop: stylevar.padding.largePadding,
+    },
+        ListTitle: {
+        flexDirection: 'row',
+        fontSize:stylevar.fontSize.titleSize,
+         paddingBottom:stylevar.padding.middlePadding,
+    },
+    subscribeText: {
+        lineHeight: 16,
+        fontSize: stylevar.fontSize.commonSize,
+        color: stylevar.color.darkGreyColor,
+    },
 })
